@@ -5,10 +5,10 @@ slug = "graalvm-and-rust-1"
 
 ### Introduction to this post
 
-This post was written with the goal of getting some kind of Rust crate running in GraalVM's LLVM compatability layer by any means possible in a relativly short period.
+This post was written with the goal of getting some kind of Rust crate running in GraalVM's LLVM compatibility layer by any means possible in a relatively short period.
 While the code in this post does compile and run, it is heavily contrived.
 I would not advise executing Rust as LLVM bitcode in any kind of production application.
-If you would like to intigrate Rust into Graalvm, I would advise having a look Michiel Borkent's [example](https://github.com/borkdude/clojure-rust-graalvm) using native images and JNI.
+If you would like to integrate Rust into Graalvm, I would advise having a look Michiel Borkent's [example](https://github.com/borkdude/clojure-rust-graalvm) using native images and JNI.
 
 This post assumes that you have already installed Rust, GraalVM, LLVM, and Clang.
 
@@ -21,7 +21,7 @@ Your options are usually:
 - Run a server written another language and call it over HTTP
 - Include an interpreter for another language in your code
 
-There is another method used in the .Net framework and on Java Virtual Machine (JVM) based langages, where you can call directly into the other language's code.
+There is another method used in the .Net framework and on Java Virtual Machine (JVM) based languages, where you can call directly into the other language's code.
 These two language families run on common virtual machines allowing languages within these families to call each other natively.
 
 GraalVM is an effort by Oracle to extend the JVM to run a wide range of languages including: Python, Java, JavaScript, and any language that can be compiled to LLVM bitcode.
@@ -138,18 +138,18 @@ $ lli --lib $(rustc --print sysroot)/lib/libstd-* target/release/deps/graalhello
 Global variable _ZN12string_cache4atom12STRING_CACHE17h43d70dbc9890e871E is declared but not defined.
 	at <llvm> null(Unknown)
 ```
-This error indicates that the bitcode file declares an external dependency on a varible which is not included.
+This error indicates that the bitcode file declares an external dependency on a variable which is not included.
 In other words the bitcode file has not been linked.
 
 ### Ensuring compilation of libraries
-In order to add libraries to the compiled binary we need to enable something called link time optomization.
+In order to add libraries to the compiled binary we need to enable something called link time optimization.
 
 In ordinary linking, the linker is passed a different libraries as assembly.
-Unfortunatly, it is a lot harder for the linker to optimize code already in assembly.
-So the LLVM provides link time optomization, which passes the linker intermediate representation for all dependencies.
-While it is intended to help the optmizer, in this case it results in a complete bitcode file being produced.
+Unfortunately, it is a lot harder for the linker to optimize code already in assembly.
+So the LLVM provides link time optimization, which passes the linker intermediate representation for all dependencies.
+While it is intended to help the optimizer, in this case it results in a complete bitcode file being produced.
 
-To enable link time optomization add the following configuration to your `Cargo.toml`:
+To enable link time optimization add the following configuration to your `Cargo.toml`:
 ``` toml
 [profile.dev]
 lto = true
@@ -188,7 +188,7 @@ org.graalvm.polyglot.PolyglotException: com.oracle.truffle.api.dsl.UnsupportedSp
 	at com.oracle.truffle.llvm.launcher.LLVMLauncher.main(LLVMLauncher.java:53)
 ...
 ```
-Unfortunatly, I did not have enough time to work out the cause of this issue.
+Unfortunately, I did not have enough time to work out the cause of this issue.
 As far as I can tell, this is caused by something cargo inserts into the program entry point.
 So I did something rather hacky, and changed the entry point of the program by calling it from c.
 
@@ -253,7 +253,7 @@ org.graalvm.polyglot.PolyglotException: java.lang.IllegalStateException: Missing
 	at com.oracle.truffle.llvm.runtime.nodes.op.LLVMArithmeticNodeFactory$LLVMI64ArithmeticNodeGen.executeGeneric_generic3(LLVMArithmeticNodeFactory.java:22
 ```
 
-### The caviats of GraalVM's LLVM support
+### The caveats of GraalVM's LLVM support
 As we can see in the above error, Graal [does not support the entirety of LLVM IR](https://www.graalvm.org/docs/reference-manual/languages/llvm/#limitations-and-differences-to-native-execution-on-top-of-graalvm-ce).
 In particular, it does not support `llvm.fshl`, the funnel shift left operation. 
 Funnel shift left is produced somewhat frequently by rustc.
@@ -261,12 +261,12 @@ So I decided to remove it.
 
 ### Removing `fshl`
 #### Or not knowing when to give up
-Fortunatly, `fshl` can be removed if you know to reimpliment it in LLVM IR.
-1. Take the `graalhello.bc` file and disassemble it to ir:
+Fortunately, `fshl` can be removed if you know to reimpliment it in LLVM IR.
+1. Take the `graalhello.bc` file and disassemble it to IR:
 ``` sh
 $ llvm-dis graalhello.bc
 ```
-2. Open up `graalhello.ll` in your prefered editor.
+2. Open up `graalhello.ll` in your preferred editor.
 Hopefully it does not crash.
 3. find a line starting with:
 ``` llvm
@@ -318,7 +318,7 @@ Items of class foo in the document:
 It Runs!
 
 ### Conclusions
-While, with the exception of patching out `fshl`, the modifications above may seem relativly simple, creating this example proved distinctly more complicated.
+While, with the exception of patching out `fshl`, the modifications above may seem relatively simple, creating this example proved distinctly more complicated.
 Before writing this post, I attempted running 3 different web libraries: Rocket, Gotham, and Iron.
 Gotham generated invalid IR.
 Rocket (after removing ring) crashed Graal with a long stack trace.
