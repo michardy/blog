@@ -1,14 +1,14 @@
 +++
-title = "Running Rust crates in GraalVM"
+title = "Running Rust Crates in GraalVM's LLVM Bitcode Executor"
 slug = "graalvm-and-rust-1"
-draft = true
 +++
 
 ### Introduction to this post
 
-This post was written with the goal of getting some kind of Rust crate running by any means possible in a relativly short period.
+This post was written with the goal of getting some kind of Rust crate running in GraalVM's LLVM compatability layer by any means possible in a relativly short period.
 While the code in this post does compile and run, it is heavily contrived.
-I would not advise combining Rust and GraalVM in any kind of production application.
+I would not advise executing Rust as LLVM bitcode in any kind of production application.
+If you would like to intigrate Rust into Graalvm, I would advise having a look Michiel Borkent's [example](https://github.com/borkdude/clojure-rust-graalvm) using native images and JNI.
 
 This post assumes that you have already installed Rust, GraalVM, LLVM, and Clang.
 
@@ -28,7 +28,7 @@ GraalVM is an effort by Oracle to extend the JVM to run a wide range of language
 
 LLVM bitcode is a binary format of LLVM intermediate representation, (or IR) a common language compilers targeting LLVM produce.
 
-### The Issues with running Rust on GraalVM
+### The Issues with running Rust on GraalVM using bitcode
 Rust can theoretically be compiled to bitcode because it uses LLVM as a back end.
 Unfortunately, actually running Rust crates in GraalVM is not as easy as just changing the compiler target.
 
@@ -43,8 +43,8 @@ The reason is that there are a few problems with LLVM bitcode:
 Additionally, something Cargo adds to main seems to break GraalVM.
 
 ### Let's start by reading the documentation
-While I may make the task of running a crate sound impossible, Rust code does already run in Graal.
-Better yet, Oracle has provided some [documentation](https://www.graalvm.org/docs/reference-manual/languages/llvm/#running-rust) for running Rust in GraalVM. (Note: Since I don't know the license terms for this documentation I will be using modified code.)
+While I may make the task of running a crate sound impossible, Rust bitcode does already run in Graal.
+Better yet, Oracle has provided some [documentation](https://www.graalvm.org/docs/reference-manual/languages/llvm/#running-rust) for running Rust as bitcode in GraalVM. (Note: Since I don't know the license terms for this documentation I will be using modified code.)
 
 1. The docs suggest building a simple application (with no dependencies):
 ``` rust
@@ -316,3 +316,13 @@ Items of class foo in the document:
 	Baz
 ```
 It Runs!
+
+### Conclusions
+While, with the exception of patching out `fshl`, the modifications above may seem relativly simple, creating this example proved distinctly more complicated.
+Before writing this post, I attempted running 3 different web libraries: Rocket, Gotham, and Iron.
+Gotham generated invalid IR.
+Rocket (after removing ring) crashed Graal with a long stack trace.
+And Iron caused Graal to segfault.
+As a side effect of this, I suspect most libraries that perform IO will not run under GraalVM's LLVM executor.
+
+Alternatively, the execution problems could be coming from the fact that my copy of Rust is using LLVM 9 while Graal is using version 7.  At some point I will have to try downgrading to Rust 1.29.
