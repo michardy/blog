@@ -325,4 +325,5 @@ Rocket (after removing ring) crashed Graal with a long stack trace.
 And Iron caused Graal to segfault.
 As a side effect of this, I suspect most libraries that perform IO will not run under GraalVM's LLVM executor.
 
-Alternatively, the execution problems could be coming from the fact that my copy of Rust is using LLVM 9 while Graal is using version 7.  At some point I will have to try downgrading to Rust 1.29.
+~~Alternatively, the execution problems could be coming from the fact that my copy of Rust is using LLVM 9 while Graal is using version 7.  At some point I will have to try downgrading to Rust 1.29.~~
+(There are similar issues under 1.29 nightly)
