@@ -5,7 +5,7 @@
 		<meta charset="utf-8"/>
 		<meta http-equiv="X-Frame-Options" content="deny">
 		<meta http-equiv="X-XSS-Protection" content="1; mode=block; report=https://cartographer.michaelbh.com/impassable">
-		<!--<meta http-equiv="Content-Security-Policy" content="block-all-mixed-content; default-src https://michaelbh.com; script-src 'sha256-T+yyVTsM1yY478w/W8qEEXy6vMiIKftZ/DeHrGzvG9M=' 'sha256-L7rohvV5RDnrMsAHjAwX2BA68HBOlrp/Kqh/G7zzRro=' https://michaelbh.com https://cartographer.michaelbh.com/js/ https://cdn.jsdelivr.net/gh/michardy/; connect-src wss://cartographer.michaelbh.com https://cartographer.michaelbh.com; style-src https://michaelbh.com https://cdn.jsdelivr.net/gh/michardy/; frame-src https://michaelbh.com https://cartographer.michaelbh.com https://us-central1-sunlit-vortex-222923.cloudfunctions.net/keystroke-dynamics-submit; img-src https://michaelbh.com https://mhardy.dev;">-->
+		<meta http-equiv="Content-Security-Policy" content="block-all-mixed-content; default-src https://michaelbh.com; script-src https://cartographer.michaelbh.com/js/ https://cdn.jsdelivr.net/gh/michardy/; connect-src wss://cartographer.michaelbh.com https://cartographer.michaelbh.com/terrraform/annotations/; style-src https://michaelbh.com https://cdn.jsdelivr.net/gh/michardy/ https://cartographer.michaelbh.com/terrraform/css/; frame-src https://cartographer.michaelbh.com; img-src https://michaelbh.com https://mhardy.dev;">
 		<meta id="meta" name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<!--Fixes a wierd bug in the chrome dev tools-->
 		<meta name="viewport" content="width=device-width"/>
@@ -55,13 +55,13 @@
 	<body class="article-page">
 		<div class="card mid-light popover" id="popover"></div>
 		<header>
-			<h1><a href="/">Michael Hardy</a>&nbsp;<a href="/blog/">/blog/</a></h1>
-			<a class="navbar" href="/blog/">Blog</a>&nbsp;
-			<a class="navbar cartographer-bridge" href="https://github.com/michardy">GitHub</a>&nbsp;
-			<a class="navbar cartographer-bridge" href="https://www.linkedin.com/in/michael-hardy-b6143a168/">LinkedIn</a>&nbsp;
-			<a class="navbar" href="/resume.html">Resume</a>&nbsp;
-			<a class="navbar cartographer-feedback" href="https://cartographer.michaelbh.com/contact/portfolio$0">Contact</a>&nbsp;
-			<a class="navbar" href="/privacy.html">Privacy Policy</a>&nbsp;
+			<h1><a href="/">Michael&nbsp;Hardy</a>&ensp;<a href="/blog/">/blog/</a></h1>
+			<a class="navbar" href="/blog/">Blog</a>&ensp;
+			<a class="navbar cartographer-bridge" href="https://github.com/michardy">GitHub</a>&ensp;
+			<a class="navbar cartographer-bridge" href="https://www.linkedin.com/in/michael-hardy-b6143a168/">LinkedIn</a>&ensp;
+			<a class="navbar" href="/resume.html">Resume</a>&ensp;
+			<a class="navbar cartographer-feedback" href="https://cartographer.michaelbh.com/contact/portfolio$0">Contact</a>&ensp;
+			<a class="navbar" href="/privacy.html">Privacy&nbsp;Policy</a>
 		</header>
 		<main>
 			<h2>{{ page.title }}</h2>
@@ -83,6 +83,7 @@
 			</div>
 		</footer>
 	</body>
+	<script src="https://cartographer.michaelbh.com/js/t.js"></script>
 	<script src="https://cdn.jsdelivr.net/gh/michardy/grid-ui@6/js/grid_window.min.js"></script>
 	<script src="https://cartographer.michaelbh.com/js/c.js"></script>
 </html>
