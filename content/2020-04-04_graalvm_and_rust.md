@@ -33,8 +33,8 @@ Rust can theoretically be compiled to bitcode because it uses LLVM as a back end
 Unfortunately, actually running Rust crates in GraalVM is not as easy as just changing the compiler target.
 
 The reason is that there are a few problems with LLVM bitcode:
-- It bitcode not stable. This is made particularly problematic by the fact that Rust and GraalVM both bundle their own versions of LLVM.
-- It bitcode not necessarily cross platform
+- Bitcode is not stable. This is made particularly problematic by the fact that Rust and GraalVM both bundle their own versions of LLVM.
+- Bitcode is not necessarily cross platform
 - There is no bitcode compilation target for Cargo
 - A lot of Rust crates assume they are running on a real computer
     
