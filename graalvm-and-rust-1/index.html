@@ -94,10 +94,10 @@ Unfortunately, actually running Rust crates in GraalVM is not as easy as just ch
 <p>The reason is that there are a few problems with LLVM bitcode:</p>
 <ul>
 <li>
-<p>It bitcode not stable. This is made particularly problematic by the fact that Rust and GraalVM both bundle their own versions of LLVM.</p>
+<p>Bitcode is not stable. This is made particularly problematic by the fact that Rust and GraalVM both bundle their own versions of LLVM.</p>
 </li>
 <li>
-<p>It bitcode not necessarily cross platform</p>
+<p>Bitcode is not necessarily cross platform</p>
 </li>
 <li>
 <p>There is no bitcode compilation target for Cargo</p>
